@@ -323,10 +323,7 @@ static void report_input_data(struct mxt224_data *data)
 		input_mt_sync(data->input_dev);
 		num_fingers_down++;
 #ifdef CONFIG_BLD
-		if (system_rev >= 0x30 && data->fingers[i].y > BLD_TOUCHKEYS_POSITION)
-		    {
 			touchkey_pressed();
-		    }
 #endif
 
 	}

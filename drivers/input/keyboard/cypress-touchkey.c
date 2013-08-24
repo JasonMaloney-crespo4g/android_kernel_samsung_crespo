@@ -181,32 +181,12 @@ static irqreturn_t touchkey_interrupt_thread(int irq, void *touchkey_devdata)
 			devdata->pdata->keycode[scancode],
 			!(data & UPDOWN_EVENT_MASK));
 
-#if defined(CONFIG_TOUCH_WAKE) || defined(CONFIG_BLD)
-		if (!(data & UPDOWN_EVENT_MASK))
-		    {
-#ifdef CONFIG_BLD			
-			touchkey_pressed();
-#endif
-		    }
-#endif
 	} else {
 		for (i = 0; i < devdata->pdata->keycode_cnt; i++)
 			input_report_key(devdata->input_dev,
 				devdata->pdata->keycode[i],
 				!!(data & (1U << i)));
 
-#if defined(CONFIG_TOUCH_WAKE) || defined(CONFIG_BLD)
-		for (i = 0; i < devdata->pdata->keycode_cnt; i++)
-		    {
-			if(!!(data & (1U << i)))
-			    {
-#ifdef CONFIG_BLD			
-				touchkey_pressed();
-#endif
-				break;
-			    }
-		    }
-#endif
 	}
 
 	input_sync(devdata->input_dev);
